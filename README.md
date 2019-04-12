@@ -67,16 +67,16 @@ tais como sua formação, sala, telefone, e­mail, etc.
 ## Autores
 
 * **Pedro Silveira Lopes**  - [Silventino](https://github.com/Silventino)
-* **Jõao Pedro Teodoro**  - [joaopedroteo](https://github.com/joaopedroteo)
+* **João Pedro Teodoro**  - [joaopedroteo](https://github.com/joaopedroteo)
 * **Arthur Henrique Souza Cruz**  - [thuzax](https://github.com/thuzax)
 * **Gabriel Ribeiro Oliveira**  - [Ribolive](https://github.com/ribolive)
 * **Eduardo Lima**  - [LimaEduardo](https://github.com/LimaEduardo)
-* **Breno Gomes**  - [K4t0mono](https://github.com/k4t0mono)
+* **Breno Gomes Cardoso**  - [K4t0mono](https://github.com/k4t0mono)
 
 
 ## Licença
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+Este projeto é licenciado sob a Licença MIT - veja [LICENSE.md](LICENSE.md) para mais detalhes.
 
 <!-- ## Acknowledgments
 
