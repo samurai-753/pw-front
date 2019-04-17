@@ -82,6 +82,6 @@ Este projeto é licenciado sob a Licença MIT - veja [LICENSE.md](LICENSE.md) pa
 
 * Hat tip to anyone whose code was used
 * Inspiration
-
+ALTERAÇÃO QUALQUER SÓ PRA COMMITAR
 * etc -->
 
