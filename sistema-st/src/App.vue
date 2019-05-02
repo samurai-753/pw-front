@@ -8,6 +8,7 @@
     <v-container>
       <v-flex xs12>
         <Drawer/>
+        <ListComponents/>
       </v-flex>
     </v-container>    
   </v-app>
@@ -16,14 +17,15 @@
 <script>
 import Header from './components/Header'
 import Drawer from './components/Drawer'
-
+import ListComponents from './components/ListComponents'
 
 
 export default {
   name: 'App',
   components: {
     Header,
-    Drawer
+    Drawer,
+    ListComponents
   },
   data () {
     return {

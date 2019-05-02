@@ -18,7 +18,7 @@
             </template>
             <v-card>
               <div v-for="(child, ic) in item.child" :key="ic"  class="button-drawer-content">
-                <v-btn flat>{{child}}</v-btn>
+                <v-btn flat @click="callViewList(item.title, child)">{{child}}</v-btn>
               </div>
             </v-card>
           </v-expansion-panel-content>
@@ -49,12 +49,18 @@ export default {
       right: null
     }
   },
+  methods: {
+    callViewList(title, child){
+      console.log('oi')
+      EventBus.$emit("SHOW-VIEW-LIST", true, title, child)
+    }
+  },
   mounted() {
     EventBus.$on('OPEN-MENU', (payload) => {
       console.log("ae disgraca")
       this.openMenu = payload
     })
-  }
+  },
 }
 </script>
 
