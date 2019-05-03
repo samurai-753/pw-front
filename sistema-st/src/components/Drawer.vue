@@ -51,8 +51,13 @@ export default {
   },
   methods: {
     callViewList(title, child){
-      console.log('oi')
-      EventBus.$emit("SHOW-VIEW-LIST", true, title, child)
+      if(child === 'Visualizar') {
+        EventBus.$emit('SHOW-REGISTER-STUDENT', false)
+        EventBus.$emit("TOP", true, title, child)
+      } else if(title == 'Alunos'){
+        EventBus.$emit("TOP", false, title, child)
+        EventBus.$emit('SHOW-REGISTER-STUDENT', true)
+      }
     }
   },
   mounted() {
