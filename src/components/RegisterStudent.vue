@@ -9,19 +9,19 @@
           <v-flex xs12>
                 <v-text-field label="Nome do Aluno" required></v-text-field>
                 <v-text-field label="Curso" required></v-text-field>
-                <v-select :items="projetos" label="Projeto"></v-select>
+                <v-select :items="projects" label="Projeto"></v-select>
           </v-flex>
           <v-flex xs12>
                 <v-text-field label="Email institucional" required></v-text-field>
-                <v-select :items="categorias" label="Categoria" required></v-select>
+                <v-select :items="categories" label="Categoria" required></v-select>
           </v-flex>
         </v-layout>
       </v-container>
     </v-form>
     <v-flex xs12>
     <v-layout>
+      <v-btn  color="error">Cancelar</v-btn>
       <v-btn color="success">Cadastrar</v-btn>
-      <v-btn color="error">Cancelar</v-btn>
     </v-layout>
     </v-flex>
   </div>
@@ -40,8 +40,8 @@ export default {
       title: 'Cadastrar Aluno',
       showList: true,
       right: null,
-      categorias: ['Iniciação científica', 'Mestrado', 'Doutorado', 'Pós-doutorado'],
-      projetos: []
+      categories: ['Iniciação científica', 'Mestrado', 'Doutorado', 'Pós-doutorado'],
+      projects: []
     }
   },
   mounted() {

@@ -52,12 +52,22 @@ export default {
   methods: {
     callViewList(title, child){
       if(child === 'Visualizar') {
-        EventBus.$emit('SHOW-REGISTER-STUDENT', false)
+        EventBus.$emit('SHOW-REGISTER-Alunos', false)
+        EventBus.$emit('SHOW-REGISTER-Projetos', false)
+        EventBus.$emit('SHOW-REGISTER-Aulas', false)
         EventBus.$emit("TOP", true, title, child)
-      } else if(title == 'Alunos'){
+      } else {
         EventBus.$emit("TOP", false, title, child)
-        EventBus.$emit('SHOW-REGISTER-STUDENT', true)
+        EventBus.$emit("SHOW-REGISTER-"+title, true)
       }
+      
+      // else if(title == 'Alunos'){
+      //   EventBus.$emit("TOP", false, title, child)
+      //   EventBus.$emit('SHOW-REGISTER-'+title, true)
+      // } else if(title == 'Projetos') {
+      //   EventBus.$emit("TOP", false, title, child)
+      //   EventBus.$emit('SHOW-REGISTER-'+title, true)
+      // }
     }
   },
   mounted() {
