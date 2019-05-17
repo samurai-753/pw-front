@@ -5,8 +5,7 @@
       <Header/>
     </div>
     <div class="main-container">
-        <MainComponent/>
-      </div>
+      <MainComponent/>
     </div>
   </v-app>
 </template>
