@@ -1,0 +1,91 @@
+<template>
+    <v-layout>
+      <v-navigation-drawer
+        v-model="openMenu"
+        absolute
+        temporary
+        clipped
+        class="text-xs-center blue darken-3"
+
+      >
+        <v-expansion-panel>
+            <v-expansion-panel-content
+              v-for="(item,i) in items"
+              :key="i"
+              hide-actions
+              class="blue darken-3 teste"
+            >
+            <template v-slot:header>
+              <v-btn flat big class="white--text teste" >{{item.title}}</v-btn>
+            </template>
+            <v-card class="blue darken-2 text-xs-center">
+              <div v-for="(child, ic) in item.child" :key="ic">
+                <v-btn flat big class="white--text " @click="callViewList(item.title, child)">{{child}}</v-btn>
+              </div>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-navigation-drawer>
+    </v-layout>
+</template>
+
+<script>
+import {EventBus} from './EventBus.js'
+
+
+export default {
+  name: 'Drawer',
+  components: {
+  },
+  data () {
+    return {
+      openMenu: false,
+      items: [
+        { title: 'Projetos', child: ['Novo', 'Visualizar']},
+        { title: 'Alunos', child: ['Novo', 'Visualizar']},
+        { title: 'Grupos', child: ['Novo', 'Visualizar']},
+        { title: 'Aulas', child: ['Novo', 'Visualizar']},
+        { title: 'Publicações', child: ['Novo', 'Visualizar']},
+        { title: 'Contato', child: ['Novo', 'Visualizar']},
+      ],
+      right: null
+    }
+  },
+  methods: {
+    callViewList(title, child){
+      if(child === 'Visualizar') {
+        EventBus.$emit('SHOW-REGISTER-Alunos', false)
+        EventBus.$emit('SHOW-REGISTER-Projetos', false)
+        EventBus.$emit('SHOW-REGISTER-Aulas', false)
+        EventBus.$emit("TOP", true, title, child)
+      } else {
+        EventBus.$emit("TOP", false, title, child)
+        EventBus.$emit("SHOW-REGISTER-"+title, true)
+      }
+      
+      // else if(title == 'Alunos'){
+      //   EventBus.$emit("TOP", false, title, child)
+      //   EventBus.$emit('SHOW-REGISTER-'+title, true)
+      // } else if(title == 'Projetos') {
+      //   EventBus.$emit("TOP", false, title, child)
+      //   EventBus.$emit('SHOW-REGISTER-'+title, true)
+      // }
+    }
+  },
+  mounted() {
+    EventBus.$on('OPEN-MENU', (payload) => {
+      console.log("ae disgraca")
+      this.openMenu = payload
+    })
+  },
+}
+</script>
+
+<style>
+  .teste {
+    border-bottom: 0ch;
+    width: 100%;
+
+  }
+</style>
+
