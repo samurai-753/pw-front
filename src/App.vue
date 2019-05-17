@@ -1,12 +1,11 @@
 <template>
-  <v-app >
+  <v-app>
     <div>
       <Drawer/>
       <Header/>
     </div>
     <div class="main-container">
-        <MainComponent/>
-      </div>
+      <MainComponent/>
     </div>
   </v-app>
 </template>
@@ -37,8 +36,6 @@ export default {
   height: 200px
 }
 .main-container {
-  background-image: linear-gradient(to bottom, deepskyblue, dodgerblue);
-.main {
   background-image: linear-gradient(to bottom, #1E88E5, #1565C0);
   height: 100%;
   width: 100%;

@@ -82,9 +82,6 @@ export default {
 </script>
 
 <style>
-  .teste {
-    border-bottom: 0ch;
-  }
   .full-height {
     height: 100%;
   }
