@@ -1,63 +1,55 @@
 <template>
-	<v-container>
-	  <v-layout>
-	  	<v-flex v-if="showList">
-	    	<ListComponents/>
-	    </v-flex>
-	    <v-flex v-if="showRegisterStudent">
-	    	<RegisterStudent/>
-	    </v-flex>
-			<v-flex v-if="showRegisterProject">
-	    	<RegisterProject/>
-	    </v-flex>
-			<v-flex v-if="showRegisterClass">
-	    	<RegisterClass/>
-	    </v-flex>
-	  </v-layout>
-	</v-container>
+  	<div class="main-component-container">
+    <div class="main-component-item">
+      <!-- <component :is="currentComponent"></component> -->
+      <generic-component/>
 
+    </div>
+  </div>
 </template>
 
 <script>
 import {EventBus} from './EventBus.js'
-import ListComponents from './ListComponents'
+// import ListComponents from './ListComponents'
 import RegisterStudent from './RegisterStudent'
 import RegisterProject from './RegisterProject'
 import RegisterClass from './RegisterClass'
+import GenericComponent from './GenericComponent'
 
 
 export default {
   name: 'MainComponent',
   components: {
-  	ListComponents,
+  	// ListComponents,
 		RegisterStudent,
 		RegisterProject,
-		RegisterClass,
+    RegisterClass,
+    GenericComponent
   },
   data () {
     return {
     	showList: true,
 			showRegisterStudent: false,
 			showRegisterProject: false,
-			showRegisterClass: false,
+      showRegisterClass: false,
+      currentComponent: null
 
     }
   },
   mounted() {
     EventBus.$on('SHOW', (payload) => {
-    	console.log('recebeu')
     	this.showList = payload
     })
     EventBus.$on('SHOW-REGISTER-Alunos', (payload) => {
-    	this.showRegisterStudent = payload
+    	this.currentComponent = "register-student"
       // EventBus.$emit("REGISTER-STUDENT", true)
 		})
 		EventBus.$on('SHOW-REGISTER-Projetos', (payload) => {
-    	this.showRegisterProject = payload
+    	this.currentComponent = "register-project"
       // EventBus.$emit("REGISTER-STUDENT", true)
 		})
 		EventBus.$on('SHOW-REGISTER-Aulas', (payload) => {
-    	this.showRegisterClass = payload
+    	this.currentComponent = "register-class"
       // EventBus.$emit("REGISTER-STUDENT", true)
     })
   }
@@ -65,5 +57,14 @@ export default {
 </script>
 
 <style>
+
+.main-component-container {
+  width: 800px;
+  height: 400px;
+}
+
+.main-component-item {
+  background-color: white;
+}
 
 </style>

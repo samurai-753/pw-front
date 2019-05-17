@@ -1,17 +1,12 @@
 <template>
   <v-app >
-    <div class="main">
-      <v-container grid-list-md>
-        <v-flex xs12>
-          <Header/>
-        </v-flex>
-      </v-container>
-      <v-container>
-        <v-flex xs12>
-          <Drawer/>
-          <MainComponent/>
-        </v-flex>
-      </v-container>    
+    <div>
+      <Drawer/>
+      <Header/>
+    </div>
+    <div class="main-container">
+        <MainComponent/>
+      </div>
     </div>
   </v-app>
 </template>
@@ -41,8 +36,14 @@ export default {
 .container-header {
   height: 200px
 }
-.main {
+.main-container {
   background-image: linear-gradient(to bottom, deepskyblue, dodgerblue);
   height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+
 </style>

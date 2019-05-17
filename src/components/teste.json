@@ -1,0 +1,54 @@
+{
+  "title": "Cadastrar Aluno",
+  "body" : [
+    {
+      "layoutSize" : "xs12",
+      "layoutContent" : [
+        {
+          "fieldType" : "v-text-field",
+          "label" : "Nome do Aluno",
+          "required" : true
+        },
+        {
+          "fieldType" : "v-text-field",
+          "label" : "Curso",
+          "required" : true
+        },
+        {
+          "fieldType" : "v-select",
+          "label" : "Projeto",
+          "items" : [],
+          "required" : true
+        }
+      ]
+    },
+    {
+      "layoutSize" : "xs12",
+      "layoutContent" : [
+        {
+          "fieldType" : "v-text-field",
+          "label" : "Email institucional",
+          "required" : true
+        },
+        {
+          "fieldType" : "v-select",
+          "label" : "Categorias",
+          "items" : ["Iniciação científica", "Mestrado", "Doutorado", "Pós-doutorado"],
+          "required" : true
+        }
+      ]
+    }
+  ],
+  "actions" : [
+    {
+      "label" : "Cancelar",
+      "color" : "error",
+      "onClick": "SayHello"
+    },
+    {
+      "label" : "Cadastrar",
+      "color" : "success",
+      "onClick": "SayHello"
+    }
+  ]
+}
