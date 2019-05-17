@@ -1,5 +1,5 @@
 <template>
-  <div class='main-container'>
+  <div>
     <v-flex>
       <h2 class="table-title">Cadastrar Aluno</h2>
     </v-flex>
