@@ -8,15 +8,15 @@
         class="text-xs-center blue darken-3"
 
       >
-        <v-expansion-panel>
+        <v-expansion-panel class="full-height">
             <v-expansion-panel-content
               v-for="(item,i) in items"
               :key="i"
               hide-actions
-              class="blue darken-3 teste"
+              class="blue darken-3 "
             >
             <template v-slot:header>
-              <v-btn flat big class="white--text teste" >{{item.title}}</v-btn>
+              <v-btn flat big class="white--text ">{{item.title}}</v-btn>
             </template>
             <v-card class="blue darken-2 text-xs-center">
               <div v-for="(child, ic) in item.child" :key="ic">
@@ -84,8 +84,9 @@ export default {
 <style>
   .teste {
     border-bottom: 0ch;
-    width: 100%;
-
+  }
+  .full-height {
+    height: 100%;
   }
 </style>
 
