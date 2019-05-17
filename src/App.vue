@@ -38,6 +38,8 @@ export default {
 }
 .main-container {
   background-image: linear-gradient(to bottom, deepskyblue, dodgerblue);
+.main {
+  background-image: linear-gradient(to bottom, #1E88E5, #1565C0);
   height: 100%;
   width: 100%;
   display: flex;

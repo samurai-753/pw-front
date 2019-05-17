@@ -5,20 +5,22 @@
         absolute
         temporary
         clipped
+        class="text-xs-center blue darken-3"
+
       >
-        <v-expansion-panel>
+        <v-expansion-panel class="full-height">
             <v-expansion-panel-content
               v-for="(item,i) in items"
               :key="i"
               hide-actions
-              class="drawer-container"
+              class="blue darken-3 "
             >
             <template v-slot:header>
-              <div class="button-drawer">{{item.title}}</div>
+              <v-btn flat big class="white--text ">{{item.title}}</v-btn>
             </template>
-            <v-card>
-              <div v-for="(child, ic) in item.child" :key="ic"  class="button-drawer-content">
-                <v-btn flat @click="callViewList(item.title, child)">{{child}}</v-btn>
+            <v-card class="blue darken-2 text-xs-center">
+              <div v-for="(child, ic) in item.child" :key="ic">
+                <v-btn flat big class="white--text " @click="callViewList(item.title, child)">{{child}}</v-btn>
               </div>
             </v-card>
           </v-expansion-panel-content>
@@ -80,20 +82,11 @@ export default {
 </script>
 
 <style>
-  .button-drawer {
-    align-content: center;
-    justify-content: center;
-    font-weight: 200px;
+  .teste {
+    border-bottom: 0ch;
   }
-
-  .drawer-container {
-    background-color: #2EA5CF !important;
-    align-content: center;
+  .full-height {
+    height: 100%;
   }
-
-  .button-drawer-content {
-    background-color: #2EA5CF !important;
-    align-content: center;
-  }
-
 </style>
+
