@@ -36,6 +36,9 @@ export default {
     VTextField,
     VSelect
   },
+  props: {
+    name: String
+  },
   data () {
     return {
       title: '',
@@ -57,23 +60,10 @@ export default {
     }
   },
   created() {
-    let pagefile = require('./teste.json')
+    let pagefile = require(`./componentsInfo/${this.name}.json`)
     this.title = pagefile["title"]
     this.actions = pagefile["actions"]
     this.body = pagefile["body"]
-
-    // let actions = []
-
-    // for(var key in actionsFromFile) {
-    //   console.log("for")
-    //   let action = {
-    //     label: actionsFromFile[key].label,
-    //     color: actionsFromFile[key].color,
-    //   }
-    //   actions.push(action)
-    // }
-
-    // this.actions = actions
 
   },
   mounted() {

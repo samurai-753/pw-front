@@ -1,0 +1,27 @@
+{
+  "title": "Cadastrar Projeto",
+  "body" : [
+    {
+      "layoutSize" : "xs12",
+      "layoutContent" : [
+        {
+          "fieldType" : "v-text-field",
+          "label" : "Nome do Projeto",
+          "required" : true
+        }
+      ]
+    }
+  ],
+  "actions" : [
+    {
+      "label" : "Cancelar",
+      "color" : "error",
+      "onClick": "SayHello"
+    },
+    {
+      "label" : "Cadastrar",
+      "color" : "success",
+      "onClick": "SayHello"
+    }
+  ]
+}

@@ -20,7 +20,7 @@
             </template>
             <v-card class="blue darken-2 text-xs-center">
               <div v-for="(child, ic) in item.child" :key="ic">
-                <v-btn flat big class="white--text " @click="callViewList(item.title, child)">{{child}}</v-btn>
+                <v-btn flat big class="white--text " @click="callViewList(item.title, child, item.render)">{{child}}</v-btn>
               </div>
             </v-card>
           </v-expansion-panel-content>
@@ -41,26 +41,25 @@ export default {
     return {
       openMenu: false,
       items: [
-        { title: 'Projetos', child: ['Novo', 'Visualizar']},
-        { title: 'Alunos', child: ['Novo', 'Visualizar']},
-        { title: 'Grupos', child: ['Novo', 'Visualizar']},
-        { title: 'Aulas', child: ['Novo', 'Visualizar']},
-        { title: 'Publicações', child: ['Novo', 'Visualizar']},
-        { title: 'Contato', child: ['Novo', 'Visualizar']},
+        { title: 'Projetos', child: ['Novo', 'Visualizar'], render: 'register-project'},
+        { title: 'Alunos', child: ['Novo', 'Visualizar'], render: 'register-student'},
+        { title: 'Grupos', child: ['Novo', 'Visualizar'], render: 'register-group'},
+        { title: 'Aulas', child: ['Novo', 'Visualizar'], render: 'register-class'},
+        { title: 'Publicações', child: ['Novo', 'Visualizar'], render: 'register-publication'},
+        { title: 'Contato', child: ['Novo', 'Visualizar'], render: 'CONTATO'},
       ],
       right: null
     }
   },
   methods: {
-    callViewList(title, child){
+    callViewList(title, child, render){
       if(child === 'Visualizar') {
         EventBus.$emit('SHOW-REGISTER-Alunos', false)
         EventBus.$emit('SHOW-REGISTER-Projetos', false)
         EventBus.$emit('SHOW-REGISTER-Aulas', false)
         EventBus.$emit("TOP", true, title, child)
       } else {
-        EventBus.$emit("TOP", false, title, child)
-        EventBus.$emit("SHOW-REGISTER-"+title, true)
+        EventBus.$emit("SHOW-REGISTER", render)
       }
       
       // else if(title == 'Alunos'){
