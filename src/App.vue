@@ -4,11 +4,11 @@
       <v-container grid-list-md>
         <v-flex xs12>
           <Header/>
+          <Drawer/>
         </v-flex>
       </v-container>
       <v-container>
         <v-flex xs12>
-          <Drawer/>
           <MainComponent/>
         </v-flex>
       </v-container>    
@@ -42,7 +42,7 @@ export default {
   height: 200px
 }
 .main {
-  background-image: linear-gradient(to bottom, deepskyblue, dodgerblue);
+  background-image: linear-gradient(to bottom, #1E88E5, #1565C0);
   height: 100%;
 }
 </style>
