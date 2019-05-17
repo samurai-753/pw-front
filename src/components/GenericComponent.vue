@@ -1,32 +1,24 @@
 <template>
-  <div>
+  <div class="elevation-20 generic-component-container">
     <v-flex>
       <h2 class="table-title">{{this.title}}</h2>
     </v-flex>
+    <v-divider class="generic-component-divider"/>
     <v-form ref="form">
       <v-container grid-list-xl>
         <v-layout v-if="showList" >
           <v-flex v-for="(layout,index) in body" :key=index>
-            <!-- {{layout["layout-content"]}} -->
-            <!-- {{layout}} -->
             <div v-for="field in LayoutFields(layout)" :key="field.label">
               <component :is="field.fieldType" :label="field.label" :required="field.required" :items="field.items"/>
             </div>
-            <!-- <component  :key=field.label :items="field.items" :is="field.field-type" :label="field['label']" :required="field['required']" > -->
             </component>
-                <!-- <v-text-field label="Nome do Aluno" required></v-text-field>
-                <v-text-field label="Curso" required></v-text-field>
-                <v-select :items="projects" label="Projeto"></v-select> -->
           </v-flex>
-          <!-- <v-flex xs12>
-                <v-text-field label="Email institucional" required></v-text-field>
-                <v-select :items="categories" label="Categoria" required></v-select>
-          </v-flex> -->
         </v-layout>
       </v-container>
     </v-form>
+    <v-divider class="generic-component-divider"/>
     <v-flex xs12>
-      <v-layout>
+      <v-layout class="generic-component-actions">
         <v-btn v-for="action in actions" :color="action.color" v-on:click="HandleFunctionCall(action.onClick)" >{{action.label}}</v-btn>
       </v-layout>
     </v-flex>
@@ -92,6 +84,19 @@ export default {
 <style>
   .table-title {
     text-align: center;
+  }
+  .generic-component-actions{
+    display: flex;
+    justify-content: center;
+  }
+
+  .generic-component-container{
+    padding: 30px;
+  }
+
+  .generic-component-divider{
+    margin-top: 20px;
+    margin-bottom: 20px
   }
 
 </style>
