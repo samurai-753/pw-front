@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar color="#2FB2DE" app>
+  <v-toolbar class="blue darken-2" app>
     <div class="container-header">
       <div>
         <Menu/>
