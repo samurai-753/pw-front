@@ -1,10 +1,12 @@
 <template>
     <div class="container-login" v-if="user === null">
       <v-btn
-        flat
+        round
         target="_blank"
+        color="#a7c7f9"
+        v-on:click="showModal"
       >
-        <span class="mr-2">Login</span>
+        Login
       </v-btn>
     </div>
     <div class="container-login" v-on:click="showPopup" v-else>
@@ -18,19 +20,25 @@
 </template>
 
 <script>
+import {EventBus} from './EventBus.js'
+
 export default {
   name: "Login",
   data () {
     return {
-      user: {
-        name: "Rafael Durelli",
-        photo: "photo"
-      }
+      // user: {
+      //   name: "Rafael Durelli",
+      //   photo: "photo"
+      // },
+      user: null
     }
   },
   methods: {
     showPopup(){
       console.log("aer")
+    },
+    showModal(){
+      EventBus.$emit("SHOW-MODAL", {showModal: true})
     }
   }
 }

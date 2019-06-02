@@ -2,26 +2,23 @@
   	<div class="main-component-container">
     <div class="main-component-item">
       <generic-component v-if="currentComponent != null" :name="currentComponent" :key="componentKey"/>
+      <login-modal v-if="showLoginModal"/>
     </div>
   </div>
 </template>
 
 <script>
 import {EventBus} from './EventBus.js'
-import RegisterStudent from './RegisterStudent'
-import RegisterProject from './RegisterProject'
-import RegisterClass from './RegisterClass'
 import GenericComponent from './GenericComponent'
+import LoginModal from './LoginModal'
 import { setTimeout } from 'timers';
 
 
 export default {
   name: 'MainComponent',
   components: {
-		RegisterStudent,
-		RegisterProject,
-    RegisterClass,
-    GenericComponent
+    GenericComponent,
+    LoginModal
   },
   data () {
     return {
@@ -30,7 +27,8 @@ export default {
 			showRegisterProject: false,
       showRegisterClass: false,
       currentComponent: null,
-      componentKey: 0
+      componentKey: 0,
+      showLoginModal: false
     }
   },
   mounted() {
@@ -43,6 +41,12 @@ export default {
         console.log(this.currentComponent)
       },100)
       this.currentComponent = null
+    })
+    EventBus.$on('CANCEL-ACTION', (payload) => {
+      this.currentComponent = null
+    })
+    EventBus.$on('SHOW-MODAL', (payload) => {
+      this.showLoginModal = payload.showModal
     })
   }
 }
