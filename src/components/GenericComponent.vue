@@ -6,12 +6,11 @@
     <v-divider class="generic-component-divider"/>
     <v-form ref="form">
       <v-container grid-list-xl>
-        <v-layout v-if="showList" >
-          <v-flex v-for="(layout,index) in body" :key=index>
+        <v-layout>
+          <v-flex v-for="(layout,index) in body" :key=index v-bind="{'layout.layoutSize' : true}">
             <div v-for="field in LayoutFields(layout)" :key="field.label">
-              <component :is="field.fieldType" :label="field.label" :required="field.required" :items="field.items"/>
+              <component :is="field.fieldType" v-model="fieldsValues[field.id]" :label="field.label" :required="field.required" :items="field.items"/>
             </div>
-            </component>
           </v-flex>
         </v-layout>
       </v-container>
@@ -19,7 +18,7 @@
     <v-divider class="generic-component-divider"/>
     <v-flex xs12>
       <v-layout class="generic-component-actions">
-        <v-btn v-for="action in actions" :color="action.color" v-on:click="HandleFunctionCall(action.onClick)" >{{action.label}}</v-btn>
+        <v-btn v-for="action in actions" :color="action.color" :key="action.onClick" v-on:click="HandleFunctionCall(action.onClick)" >{{action.label}}</v-btn>
       </v-layout>
     </v-flex>
   </div>
@@ -28,6 +27,9 @@
 <script>
 import {EventBus} from './EventBus.js'
 import { VTextField, VSelect } from 'vuetify/lib'
+import axios from 'axios'
+
+import {API_URL} from '../config/config'
 
 
 export default {
@@ -42,10 +44,9 @@ export default {
   data () {
     return {
       title: '',
-      showList: true,
-      title: "",
       actions: [],
-      body: []
+      body: [],
+      fieldsValues: {}
     }
   },
   methods: {
@@ -57,6 +58,22 @@ export default {
     },
     SayHello(){
       console.log("HelloWorld")
+    },
+    Cancel(){
+      EventBus.$emit("CANCEL-ACTION", {})
+    },
+    SendReq(){
+      const url = `${API_URL}`+ this.endpoint
+      const reqBody = this.fieldsValues
+      console.log(url)
+      console.log(reqBody)
+      // axios.post(url, reqBody).then((response) => {
+      //   console.log("reponse")
+      //   //Emitir mensagem de sucesso para o usuário
+      // }).catch((error) => {
+      //   console.log(error)
+      //   //Emitir mensagem de erro para o usuário
+      // })
     }
   },
   created() {
@@ -64,7 +81,13 @@ export default {
     this.title = pagefile["title"]
     this.actions = pagefile["actions"]
     this.body = pagefile["body"]
+    this.endpoint = pagefile["endpoint"]
 
+    this.body.forEach((element) => {
+      element['layoutContent'].forEach((content) => {
+        this.fieldsValues[content.id] = null
+      })
+    })
   },
   mounted() {
   },

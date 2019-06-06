@@ -10,6 +10,17 @@
           "required" : true
         }
       ]
+    },
+    {
+      "layoutSize": "xs12",
+      "layoutContent": [
+        {
+          "fieldType": "v-select",
+          "label": "Categoria",
+          "items" : ["Iniciação científica", "Mestrado", "Doutorado", "Pós-doutorado"],
+          "required": true
+        }
+      ]
     }
   ],
   "actions" : [

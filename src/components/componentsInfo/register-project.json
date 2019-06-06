@@ -5,8 +5,15 @@
       "layoutSize" : "xs12",
       "layoutContent" : [
         {
+          "id:" : "nome",
           "fieldType" : "v-text-field",
           "label" : "Nome do Projeto",
+          "required" : true
+        },
+        {
+          "id:" : "descricao",
+          "fieldType" : "v-text-field",
+          "label" : "Descrição do projeto",
           "required" : true
         }
       ]
@@ -16,7 +23,7 @@
     {
       "label" : "Cancelar",
       "color" : "error",
-      "onClick": "SayHello"
+      "onClick": "Cancel"
     },
     {
       "label" : "Cadastrar",

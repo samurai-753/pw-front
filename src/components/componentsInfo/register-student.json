@@ -5,16 +5,19 @@
       "layoutSize" : "xs12",
       "layoutContent" : [
         {
+          "id" : "nome",
           "fieldType" : "v-text-field",
           "label" : "Nome do Aluno",
           "required" : true
         },
         {
+          "id" : "curso",
           "fieldType" : "v-text-field",
           "label" : "Curso",
           "required" : true
         },
         {
+          "id" : "projeto",
           "fieldType" : "v-select",
           "label" : "Projeto",
           "items" : [],
@@ -26,11 +29,13 @@
       "layoutSize" : "xs12",
       "layoutContent" : [
         {
+          "id" : "email",
           "fieldType" : "v-text-field",
           "label" : "Email institucional",
           "required" : true
         },
         {
+          "id" : "categoria",
           "fieldType" : "v-select",
           "label" : "Categorias",
           "items" : ["Iniciação científica", "Mestrado", "Doutorado", "Pós-doutorado"],
@@ -43,12 +48,13 @@
     {
       "label" : "Cancelar",
       "color" : "error",
-      "onClick": "SayHello"
+      "onClick": "Cancel"
     },
     {
       "label" : "Cadastrar",
       "color" : "success",
-      "onClick": "SayHello"
+      "onClick": "SendReq"
     }
-  ]
+  ],
+  "endpoint": "/api/student"
 }
