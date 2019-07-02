@@ -16,7 +16,7 @@
               class="blue darken-3 "
             >
             <template v-slot:header>
-              <v-btn flat big class="white--text ">{{item.title}}</v-btn>
+              <v-btn flat big class="white--text " @click="checkRoute(item)">{{item.title}}</v-btn>
             </template>
             <v-card class="blue darken-2 text-xs-center">
               <div v-for="(child, ic) in item.child" :key="ic">
@@ -73,10 +73,7 @@ export default {
             ]
         },
         { 
-            title: 'Contato', child: [
-                {title : 'Novo', route: '/NewPublication'},
-                {title : 'Visualizar', route: '/ViewPublications'}
-            ]
+            title: 'Contato', route: '/ViewContacts'
         },
       ],
       right: null
@@ -86,6 +83,13 @@ export default {
     ...mapState({
         openMenu : state => state.showDrawer
     })
+  },
+  methods: {
+    checkRoute(item) {
+      if (item.route !== null) {
+        this.$router.push(item.route)
+      }
+    }
   },
   created() {
       console.log("drawer created")

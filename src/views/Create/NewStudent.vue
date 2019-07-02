@@ -86,7 +86,7 @@ export default {
             {
                 "label" : "Cancelar",
                 "color" : "error",
-                "onClick": "SayHello"
+                "onClick": "cancel"
             },
         ]
     }
@@ -101,6 +101,9 @@ export default {
               body[field.name] = field.value
           })
           console.log(body)
+      },
+      cancel(){
+          this.$router.push('/')
       }
   }
 }

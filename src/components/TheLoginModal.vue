@@ -25,6 +25,7 @@
                   <v-text-field
                     v-model="password"
                     label="Senha"
+                    type="password"
                   ></v-text-field>
                 </v-flex>
 
@@ -61,6 +62,9 @@
 
 <script>
 
+import {API_URL} from '../config/config'
+import axios from 'axios'
+
 export default {
   name: "TheLoginModal",
   data: function() {
@@ -71,8 +75,18 @@ export default {
   },
   methods: {
     sendInfo(){
-        console.log("Sending info...")
-        console.log(this.email, this.password)
+        let apiEndpoint = `${API_URL}/login`
+        const {email, password} = this
+        let body = {email, password}
+        console.log("sending info")
+        console.log(apiEndpoint, body)
+        axios.post(apiEndpoint, body).then((response) => {
+          console.log("Deu certo")
+          console.log(response)
+        }).catch((err) => {
+          console.log("Deu errado")
+          console.log(err)
+        })
     },
     goToNewUser(event){
         event.preventDefault()

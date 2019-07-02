@@ -14,15 +14,7 @@
                             </div>
                         </v-flex>
                         <v-flex>
-                            <form ref="fileform">
-                                <div class="upload-box">
-                                    <span class="drop-files">Drop the files here!</span>
-                                    <div v-for="(file, key) in files" :key="key" class="file-listing">
-                                        <img class="preview" v-bind:ref="'preview'+parseInt( key )"/>
-                                        {{ file.name }}
-                                    </div>
-                                </div>
-                            </form>
+                            <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
                         </v-flex>
                     </v-layout>
                 </v-container>
@@ -42,11 +34,15 @@
 import axios from 'axios'
 import { VTextField, VSelect } from 'vuetify/lib'
 
+import vue2Dropzone from 'vue2-dropzone'
+import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+
 export default {
   name: 'NewClass',
   components: {
     VTextField,
-    VSelect
+    VSelect,
+    vueDropzone: vue2Dropzone
   },
   props: {
     name: String
@@ -63,9 +59,10 @@ export default {
                     required: true
                 },
                 {
-                    label: 'Descrição',
+                    label: 'Tipo da disciplina',
                     name: 'description',
-                    fieldType: 'v-text-field',
+                    fieldType: 'v-select',
+                    items: ["Graduação", "Pós-Graduação"],
                     value: '',
                     required: true
                 }
@@ -79,10 +76,15 @@ export default {
             {
                 "label" : "Cancelar",
                 "color" : "error",
-                "onClick": "SayHello"
+                "onClick": "cancel"
             },
         ],
-        files: []
+        dropzoneOptions: {
+          url: 'https://httpbin.org/post',
+          thumbnailWidth: 150,
+          maxFilesize: 0.5,
+          headers: { "My-Awesome-Header": "header value" }
+        }
     }
   },
   methods: {
@@ -94,23 +96,10 @@ export default {
           this.fields.forEach((field) => {
               body[field.name] = field.value
           })
-          console.log(body)
+      },
+      cancel(){
+          this.$router.push('/')
       }
-  },
-  mounted(){
-    ['drag', 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'].forEach( function( evt ) {
-     
-        this.$refs.fileform.addEventListener(evt, function(e){
-            e.preventDefault();
-            e.stopPropagation();
-        }.bind(this), false);
-    }.bind(this));
-
-    this.$refs.fileform.addEventListener('drop', function(e){
-        for( let i = 0; i < e.dataTransfer.files.length; i++ ){
-            this.files.push( e.dataTransfer.files[i] );
-        }
-    }.bind(this));
   }
 }
 </script>

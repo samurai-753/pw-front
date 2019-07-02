@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-import NewUser from './views/NewUser.vue'
 
+import NewUser from './views/Create/NewUser.vue'
 import NewProject from './views/Create/NewProject.vue'
 import NewStudent from './views/Create/NewStudent.vue'
 import NewGroup from './views/Create/NewGroup.vue'
@@ -11,6 +11,9 @@ import NewPublication from './views/Create/NewPublication.vue'
 
 import ViewProjects from './views/View/ViewProjects.vue'
 import ViewStudents from './views/View/ViewStudents.vue'
+import ViewClasses from './views/View/ViewClasses.vue'
+import ViewPublications from './views/View/ViewPublications.vue'
+import ViewContacts from './views/View/ViewContacts.vue'
 
 
 Vue.use(Router)
@@ -71,6 +74,21 @@ export default new Router({
       path: '/ViewStudents',
       name: 'ViewStudents',
       component: ViewStudents
+    },
+    {
+      path: '/ViewClasses',
+      name: 'ViewClasses',
+      component: ViewClasses
+    },
+    {
+      path: '/ViewPublications',
+      name: 'ViewPublications',
+      component: ViewPublications
+    },
+    {
+      path: '/ViewContacts',
+      name: 'ViewContacts',
+      component: ViewContacts
     }
   ]
 })

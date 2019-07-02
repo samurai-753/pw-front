@@ -7,14 +7,18 @@
             <v-divider class="divider"/>
             <v-form>
                 <v-container grid-list-xs>
-                    <v-layout column>
+                    <v-layout>
                         <v-flex>
                             <div v-for="field in fields" :key="field.label">
-                                <component :is="field.fieldType" v-model="field.value" :label="field.label" :required="field.required" :items="field.items"/>
+                                <component 
+                                    :is="field.fieldType" 
+                                    v-model="field.value" 
+                                    :label="field.label" 
+                                    :required="field.required" 
+                                    :items="field.items" 
+                                    :type="field.type" 
+                                />
                             </div>
-                        </v-flex>
-                        <v-flex>
-                            <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
                         </v-flex>
                     </v-layout>
                 </v-container>
@@ -34,44 +38,71 @@
 import axios from 'axios'
 import { VTextField, VSelect } from 'vuetify/lib'
 
-import vue2Dropzone from 'vue2-dropzone'
-import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+import {API_URL} from '../../config/config'
+
 
 export default {
-  name: 'NewPublication',
+  name: 'NewUser',
   components: {
     VTextField,
-    VSelect,
-    vueDropzone: vue2Dropzone
+    VSelect
   },
   props: {
     name: String
   },
   data () {
     return {
-        title: 'Nova Publicação',
+        title: 'Novo Usuário',
+        apiEndpoint: `${API_URL}/student`,
         fields: [
                 {
                     label: 'Nome',
-                    name: 'name',
+                    name: 'nome',
                     fieldType: 'v-text-field',
                     value: '',
                     required: true
                 },
                 {
-                    label: 'Informação',
-                    name: 'info',
+                    label: 'Email',
+                    name: 'email',
                     fieldType: 'v-text-field',
                     value: '',
                     required: true
                 },
                 {
-                    label: 'Tipo',
-                    name: 'tipo',
-                    fieldType: 'v-select',
-                    items: ["Conferência", "Resumo", "Periódico"],
+                    label: 'Telefone',
+                    name: 'telefone',
+                    fieldType: 'v-text-field',
                     value: '',
                     required: true
+                },
+                {
+                    label: 'Curso',
+                    name: 'curso',
+                    fieldType: 'v-text-field',
+                    value: '',
+                    required: true
+                },
+                {
+                    label: 'Sala',
+                    name: 'resumo',
+                    fieldType: 'v-text-field',
+                    value: '',
+                    required: true
+                },
+                {
+                    label: 'Senha',
+                    name: 'resumo',
+                    fieldType: 'v-text-field',
+                    value: '',
+                    required: true,
+                },
+                {
+                    label: 'Confirmar senha',
+                    name: 'resumo',
+                    fieldType: 'v-text-field',
+                    value: '',
+                    required: true,
                 }
         ],
         actions: [
@@ -86,12 +117,8 @@ export default {
                 "onClick": "cancel"
             },
         ],
-        dropzoneOptions: {
-          url: 'https://httpbin.org/post',
-          thumbnailWidth: 150,
-          maxFilesize: 0.5,
-          headers: { "My-Awesome-Header": "header value" }
-        }
+        showConfirmPassword: false,
+        showPassword: false
     }
   },
   methods: {
@@ -103,6 +130,7 @@ export default {
           this.fields.forEach((field) => {
               body[field.name] = field.value
           })
+          console.log(body)
       },
       cancel(){
           this.$router.push('/')
