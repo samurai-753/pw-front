@@ -16,12 +16,14 @@
             <slot name="body">
                <v-flex xs12>
                   <v-text-field
+                    v-model="email"
                     label="Email"
                   ></v-text-field>
                 </v-flex>
 
                 <v-flex xs12>
                   <v-text-field
+                    v-model="password"
                     label="Senha"
                   ></v-text-field>
                 </v-flex>
@@ -37,13 +39,14 @@
             <slot name="footer">
               <div class="container-button">
                 <v-flex xs12>
-                  <v-btn color="success" block >Success</v-btn>
+                  <v-btn color="success" @click="sendInfo" block >Login</v-btn>
                 </v-flex>
               </div>
 
               <div class="container-button">
                 <v-flex xs12  class="text-xs-center">
-                  <a href="#">Ainda não é cadastrado?</a>
+                    <!-- <a href="#" @click="goToNewUser">Ainda não é cadastrado?</a> -->
+                    <router-link to="/newuser">Ainda não é cadastrado?</router-link>
                 </v-flex>
               </div>
 
@@ -57,15 +60,25 @@
 
 
 <script>
-import {EventBus} from './EventBus.js'
 
 export default {
-  name: "LoginModal",
-  methods: {
-    closeModal(){
-      EventBus.$emit("SHOW-MODAL", {showModal: true})
+  name: "TheLoginModal",
+  data: function() {
+    return {
+      email: '',
+      password: ''
     }
-  }
+  },
+  methods: {
+    sendInfo(){
+        console.log("Sending info...")
+        console.log(this.email, this.password)
+    },
+    goToNewUser(event){
+        event.preventDefault()
+        this.$router.push({ path: 'about' })
+    }
+  },
 }
 </script>
 

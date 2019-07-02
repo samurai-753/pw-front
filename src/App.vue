@@ -1,27 +1,32 @@
 <template>
   <v-app>
-    <div>
-      <Drawer/>
-      <Header/>
-    </div>
-    <div class="main-container">
-      <MainComponent/>
-    </div>
+    <the-header />
+    <v-content class="main-div">
+      <router-view/>
+      <the-login-modal v-if="showLoginModal"/>
+      <the-drawer/>
+    </v-content>
   </v-app>
 </template>
 
 <script>
-import Header from './components/Header'
-import Drawer from './components/Drawer'
-import MainComponent from './components/MainComponent'
+import TheLoginModal from './components/TheLoginModal'
+import TheHeader from './components/TheHeader'
+import TheDrawer from './components/TheDrawer'
 
+import { mapState } from 'vuex'
 
 export default {
   name: 'App',
   components: {
-    Header,
-    Drawer,
-    MainComponent
+    TheLoginModal,
+    TheHeader,
+    TheDrawer
+  },
+  computed : {
+    ...mapState({
+      showLoginModal : state => state.showLoginModal
+    })
   },
   data () {
     return {
@@ -31,18 +36,9 @@ export default {
 }
 </script>
 
-<style>
-.container-header {
-  height: 200px
-}
-.main-container {
-  background-image: linear-gradient(to bottom, #1E88E5, #1565C0);
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-
+<style scoped>
+  .main-div {
+    background-image: linear-gradient(to bottom, #1E88E5, #1565C0);
+  }
 </style>
+
