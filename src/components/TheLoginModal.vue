@@ -16,13 +16,16 @@
             <slot name="body">
                <v-flex xs12>
                   <v-text-field
+                    v-model="email"
                     label="Email"
                   ></v-text-field>
                 </v-flex>
 
                 <v-flex xs12>
                   <v-text-field
+                    v-model="password"
                     label="Senha"
+                    type="password"
                   ></v-text-field>
                 </v-flex>
 
@@ -37,13 +40,14 @@
             <slot name="footer">
               <div class="container-button">
                 <v-flex xs12>
-                  <v-btn color="success" block >Success</v-btn>
+                  <v-btn color="success" @click="sendInfo" block >Login</v-btn>
                 </v-flex>
               </div>
 
               <div class="container-button">
                 <v-flex xs12  class="text-xs-center">
-                  <a href="#">Ainda não é cadastrado?</a>
+                    <!-- <a href="#" @click="goToNewUser">Ainda não é cadastrado?</a> -->
+                    <router-link to="/newuser">Ainda não é cadastrado?</router-link>
                 </v-flex>
               </div>
 
@@ -57,15 +61,38 @@
 
 
 <script>
-import {EventBus} from './EventBus.js'
+
+import {API_URL} from '../config/config'
+import axios from 'axios'
 
 export default {
-  name: "LoginModal",
-  methods: {
-    closeModal(){
-      EventBus.$emit("SHOW-MODAL", {showModal: true})
+  name: "TheLoginModal",
+  data: function() {
+    return {
+      email: '',
+      password: ''
     }
-  }
+  },
+  methods: {
+    sendInfo(){
+        let apiEndpoint = `${API_URL}/login`
+        const {email, password} = this
+        let body = {email, password}
+        console.log("sending info")
+        console.log(apiEndpoint, body)
+        axios.post(apiEndpoint, body).then((response) => {
+          console.log("Deu certo")
+          console.log(response)
+        }).catch((err) => {
+          console.log("Deu errado")
+          console.log(err)
+        })
+    },
+    goToNewUser(event){
+        event.preventDefault()
+        this.$router.push({ path: 'about' })
+    }
+  },
 }
 </script>
 
