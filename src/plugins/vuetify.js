@@ -2,10 +2,12 @@ import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
 import 'vuetify/src/stylus/app.styl'
 
-import pt from 'vuetify/es5/locale/pt'
+import pt from 'vuetify/es5/locale/pt.js'
 
 Vue.use(Vuetify, {
   iconfont: 'md',
-  locales: { pt },
-  current: 'pt'
+  lang: { 
+    locales: { pt },
+    current: 'pt'
+  },
 })

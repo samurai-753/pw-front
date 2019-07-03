@@ -124,6 +124,7 @@ export default {
     padding: 30px;
     background-color: white;
     width: 100%;
+    border-radius: 40px;
 }
 
 .divider {

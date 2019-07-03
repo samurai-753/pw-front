@@ -26,6 +26,9 @@ export default new Vuex.Store({
     showLoginModal(context) {
       context.commit('showLoginModal')
     },
+    hideLoginModal(context) {
+      context.commit('hideLoginModal')
+    },
     toggleDrawer(context){
       context.commit('toggleDrawer')
     }

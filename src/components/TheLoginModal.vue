@@ -6,9 +6,14 @@
 
           <div class="modal-header">
             <slot name="header">
-              <v-flex xs12 class="text-xs-center">
-                <span> <p class="title"> Acesse a sua conta </p> </span>
-              </v-flex>
+              <v-layout row wrap align-center>
+                <v-flex xs11 >
+                  <span class="title"> Acesse a sua conta </span>
+                </v-flex>  
+                <v-flex xs1>
+                  <v-icon class="close-icon" @click="hideLoginModal"> close </v-icon>
+                </v-flex>              
+              </v-layout>
             </slot>
           </div>
 
@@ -30,7 +35,7 @@
                 </v-flex>
 
                 <v-flex xs12  class="text-xs-right">
-                  <a href="#">Esqueci minha senha</a>
+                  <a href="#" @click="forgotPassword">Esqueci minha senha</a>
                 </v-flex>
 
             </slot>
@@ -47,7 +52,8 @@
               <div class="container-button">
                 <v-flex xs12  class="text-xs-center">
                     <!-- <a href="#" @click="goToNewUser">Ainda não é cadastrado?</a> -->
-                    <router-link to="/newuser">Ainda não é cadastrado?</router-link>
+                    <a href="#" @click="goToNewUser">Ainda não é cadastrado?</a>
+                    <!-- <router-link @click="goToNewUser" to="/newuser">Ainda não é cadastrado?</router-link> -->
                 </v-flex>
               </div>
 
@@ -64,6 +70,9 @@
 
 import {API_URL} from '../config/config'
 import axios from 'axios'
+
+import { mapState, mapActions } from 'vuex'
+
 
 export default {
   name: "TheLoginModal",
@@ -90,9 +99,14 @@ export default {
     },
     goToNewUser(event){
         event.preventDefault()
-        this.$router.push({ path: 'about' })
-    }
-  },
+        this.$router.push('/newuser')
+        this.hideLoginModal()
+    },
+    forgotPassword(){
+      alert("Ainda não implementado")
+    },
+    ...mapActions(['hideLoginModal'])
+  }
 }
 </script>
 
@@ -168,6 +182,17 @@ export default {
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+}
+
+.close-icon {
+    border-radius: 20px;
+    height: 35px;
+    width: 35px;
+}
+
+.close-icon:hover{
+    background-color: rgb(207, 207, 207, 0.5);
+    border-radius: 20px;
 }
 </style>
 

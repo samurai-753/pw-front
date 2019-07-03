@@ -2,9 +2,11 @@
   <v-app>
     <the-header />
     <v-content class="main-div">
-      <router-view/>
-      <the-login-modal v-if="showLoginModal"/>
-      <the-drawer/>
+      <div @click="closeLoginModal">
+        <router-view/>
+        <the-login-modal id="login-modal" v-if="showLoginModal"/>
+        <the-drawer/>
+      </div>
     </v-content>
   </v-app>
 </template>
@@ -14,7 +16,7 @@ import TheLoginModal from './components/TheLoginModal'
 import TheHeader from './components/TheHeader'
 import TheDrawer from './components/TheDrawer'
 
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'App',
@@ -32,6 +34,14 @@ export default {
     return {
       //
     }
+  },
+  methods: {
+    closeLoginModal(event) {
+      if (this.showLoginModal && event.target.className === "modal-wrapper") {
+        this.hideLoginModal()
+      }
+    },
+    ...mapActions(['hideLoginModal'])
   }
 }
 </script>
