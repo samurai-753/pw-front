@@ -7,11 +7,13 @@ export default new Vuex.Store({
   state: {
     showLoginModal: false,
     showDrawer : false,
-    userToken : null
+    userToken : null,
+    userName : null
   },
   getters: {
     showLoginModal: state => state.showLoginModal,
     userToken: state => state.userToken,
+    userName: state => state.userName,
   },
   mutations: {
     showLoginModal(state) {
@@ -25,6 +27,7 @@ export default new Vuex.Store({
     },
     defineToken(state, payload) {
       state.userToken = payload.token
+      state.userName = payload.name
     }
   },
   actions: {

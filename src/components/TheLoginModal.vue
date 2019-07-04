@@ -89,7 +89,8 @@ export default {
         let body = {email, password}
         axios.post(apiEndpoint, body).then((response) => {
           const {access_token} = response.data
-          this.defineUserToken({'token' : access_token})
+          const user_name = response.data.nome;
+          this.defineUserToken({'token' : access_token, 'name' : user_name})
           this.$notify({
             group: 'main',
             type: 'success',

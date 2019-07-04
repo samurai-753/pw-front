@@ -5,8 +5,12 @@
                 <v-icon class="menu-icon" @click="toggleDrawer"> menu </v-icon>
                 <img @click="goHome" class="img-logo" src="../assets/liquid-letter-s-01.png"/>
             </div>
-            <div>
+            <div v-if="this.userToken === null">
                 <the-login/>
+            </div>
+            <div class="teste" v-else>
+                <v-icon medium dark>account_circle</v-icon>
+                <p class="white--text nome font-weight-bold">{{this.userName}}</p>
             </div>
         </div>
     </v-toolbar>
@@ -15,13 +19,19 @@
 <script>
 
 import TheLogin from "./TheLogin"
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 
 export default {
     name: 'TheHeader',
     components: {
         TheLogin
+    },
+    computed: {
+        ...mapState({
+            userToken: state => state.userToken,
+            userName: state => state.userName
+        })
     },
     data () {
         return {
@@ -33,6 +43,7 @@ export default {
         },
         goHome() {
             this.$router.push("/")
+            console.log(this.userName)
         },
         ...mapActions(['toggleDrawer'])
     }
@@ -76,4 +87,19 @@ export default {
     background-color: rgb(207, 207, 207, 0.1);
     border-radius: 20px;
 }
+
+.nome{
+    font-size: 1.5em;
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+.teste {
+    display: flex;
+    direction: row;
+    justify-content: center;
+    align-items: center;
+    
+}
+
 </style>

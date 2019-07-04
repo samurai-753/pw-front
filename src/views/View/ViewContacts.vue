@@ -13,11 +13,11 @@
                 </v-text-field>
             <v-divider class="divider"/>
             <v-data-table :headers="headers" :items="professores" :search="searchTerm" class="elevation-1" :expand="expanded" item-key="nome">
-                <template v-slot:items="props">
-                    <tr @click="props.expanded = !props.expanded">
-                        <td>{{ props.item.nome }}</td>
-                        <td>{{ props.item.email }}</td>
-                        <td>
+                <template class="pointer" v-slot:items="props">
+                    <tr class="pointer" @click="props.expanded = !props.expanded">
+                        <td class="pointer">{{ props.item.nome }}</td>
+                        <td class="pointer">{{ props.item.email }}</td>
+                        <td class="pointer">
                             <v-icon  style="margin-right: 5px" @click="editItem(props.item)"> edit </v-icon>
                             <v-icon  @click="deleteItem(props.item)" > delete </v-icon>
                         </td>
@@ -25,8 +25,8 @@
                 </template>
                 <template v-slot:expand="props">
                     <v-card flat>
-                        <v-card-text> Teleone: {{props.item.telefone}}</v-card-text>
-                        <v-card-text> Sala: {{props.item.sala}}</v-card-text>
+                        <v-card-text><span class="font-weight-bold">Telefone:</span> {{props.item.telefone}}</v-card-text>
+                        <v-card-text><span class="font-weight-bold">Sala:</span> {{props.item.sala}}</v-card-text>
                     </v-card>
                 </template>
             </v-data-table>
@@ -37,7 +37,7 @@
 
 <script>
 import axios from 'axios'
-import { VTextField, VSelect } from 'vuetify/lib'
+import { VTextField } from 'vuetify/lib'
 
 import {API_URL} from '../../config/config'
 
@@ -47,8 +47,7 @@ import { mapState } from 'vuex'
 export default {
     name: 'ViewPublications',
     components: {
-        VTextField,
-        VSelect
+        VTextField
     },
     props: {
         name: String
@@ -147,6 +146,10 @@ export default {
 .actions {
     display: flex;
     justify-content: center;
+}
+
+.pointer {
+    cursor: pointer;
 }
 
 </style>
