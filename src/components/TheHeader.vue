@@ -11,6 +11,7 @@
             <div class="teste" v-else>
                 <v-icon medium dark>account_circle</v-icon>
                 <p class="white--text nome font-weight-bold">{{this.userName}}</p>
+                <v-icon dark class="menu-icon" @click="doLogout"> exit_to_app </v-icon>
             </div>
         </div>
     </v-toolbar>
@@ -41,11 +42,15 @@ export default {
         toggleDrawer() {
             this.toggleDrawer()
         },
+        doLogout() {
+            // this.$router.push("/")
+            this.logout()
+            this.$router.push("/")
+        },
         goHome() {
             this.$router.push("/")
-            console.log(this.userName)
         },
-        ...mapActions(['toggleDrawer'])
+        ...mapActions(['toggleDrawer', 'logout'])
     }
 }
 </script>
@@ -92,6 +97,8 @@ export default {
     font-size: 1.5em;
     text-align: center;
     margin-bottom: 0px;
+    margin-left: 3px;
+    margin-right: 20px;
 }
 
 .teste {

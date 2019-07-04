@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { longStackSupport } from 'q';
 
 Vue.use(Vuex)
 
@@ -28,6 +29,10 @@ export default new Vuex.Store({
     defineToken(state, payload) {
       state.userToken = payload.token
       state.userName = payload.name
+    },
+    logout(state){
+      state.userToken = null
+      state.userName = null
     }
   },
   actions: {
@@ -42,6 +47,9 @@ export default new Vuex.Store({
     },
     defineUserToken(context, payload) {
       context.commit('defineToken', payload)
+    },
+    logout(context){
+      context.commit('logout')
     }
   }
 })

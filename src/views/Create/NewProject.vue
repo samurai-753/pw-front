@@ -30,12 +30,19 @@
 <script>
 import axios from 'axios'
 import { VTextField, VSelect } from 'vuetify/lib'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'GenericComponent',
   components: {
     VTextField,
     VSelect
+  },
+  computed:{
+    ...mapState({
+        userToken: state => state.userToken,
+        userName: state => state.userName
+    })
   },
   props: {
     name: String
@@ -64,7 +71,7 @@ export default {
                     label: 'Orientador',
                     name: 'orientador',
                     fieldType: 'v-text-field',
-                    value: 'Eduardo Lima',
+                    value: this.userName,
                     required: true,
                     editable: false
                 },
@@ -106,6 +113,9 @@ export default {
       cancel(){
           this.$router.push('/')
       }
+  },
+  created(){
+      this.fields[2].value = this.userName;
   }
 }
 </script>

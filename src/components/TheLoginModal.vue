@@ -88,8 +88,12 @@ export default {
         const {email, password} = this
         let body = {email, password}
         axios.post(apiEndpoint, body).then((response) => {
+          if(response.data.message != null){
+            throw Exception;
+          }
           const {access_token} = response.data
           const user_name = response.data.nome;
+          this.hideLoginModal()
           this.defineUserToken({'token' : access_token, 'name' : user_name})
           this.$notify({
             group: 'main',
