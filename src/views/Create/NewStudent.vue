@@ -45,7 +45,7 @@ export default {
   },
   data () {
     return {
-        title: 'Novo Projeto',
+        title: 'Novo Aluno',
         apiEndpoint: `${API_URL}/aluno`,
         fields: [
                 {
@@ -58,6 +58,13 @@ export default {
                 {
                     label: 'Email institucional',
                     name: 'email',
+                    fieldType: 'v-text-field',
+                    value: '',
+                    required: true
+                },
+                {
+                    label: 'Telefone',
+                    name: 'telefone',
                     fieldType: 'v-text-field',
                     value: '',
                     required: true
@@ -94,10 +101,19 @@ export default {
               body[field.name] = field.value
           })
           axios.post(this.apiEndpoint, body).then((response) => {
-              if (response.code === 200) {
-                  alert("foi")
+              if (response.status === 200) {
+                  this.$notify({
+                    group: 'main',
+                    type: 'success',
+                    title: 'Sucesso!',
+                    text: 'Aluno criado com sucesso!'
+                });
               } else {
-                  alert("n foi")
+                  this.$notify({
+                    group: 'main',
+                    type: 'error',
+                    title: 'Ocorreu um erro!',
+                });
               }
           })
       },

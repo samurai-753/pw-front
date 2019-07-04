@@ -30,6 +30,7 @@
 <script>
 import axios from 'axios'
 import { VTextField, VSelect } from 'vuetify/lib'
+import {API_URL} from '../../config/config'
 
 export default {
   name: 'NewGroup',
@@ -42,7 +43,8 @@ export default {
   },
   data () {
     return {
-        title: 'Novo Grupo',
+        title: 'Novo Projeto',
+        apiEndpoint: `${API_URL}/projeto`,
         fields: [
                 {
                     label: 'Nome',
@@ -52,12 +54,28 @@ export default {
                     required: true
                 },
                 {
-                    label: 'Descrição',
-                    name: 'description',
+                    label: 'Orientador',
+                    name: 'orientador',
                     fieldType: 'v-text-field',
                     value: '',
                     required: true
-                }
+                },
+                {
+                    label: 'Coorientador',
+                    name: 'coorientador',
+                    fieldType: 'v-select',
+                    items: [],
+                    trueValue: '',
+                    value: '',
+                    required: false
+                },
+                {
+                    label: 'Alunos',
+                    name: 'alunos',
+                    fieldType: 'v-text-field',
+                    value: '',
+                    required: true
+                },
         ],
         actions: [
             {
@@ -70,8 +88,13 @@ export default {
                 "color" : "error",
                 "onClick": "cancel"
             },
-        ]
+        ],
+        orientadores: [],
+        orientadoresId: []
     }
+  },
+  created(){
+      this.getProfessores()
   },
   methods: {
       HandleFunctionCall(functionName){
@@ -82,10 +105,41 @@ export default {
           this.fields.forEach((field) => {
               body[field.name] = field.value
           })
-          console.log(body)
+          let indice = this.orientadores.indexOf(body['coorientador'])
+          body['coorientador'] = this.orientadoresId[indice]
+
+          axios.post(this.apiEndpoint, body).then((response) => {
+              const {data} = response.data
+              if (data.status === 200) {
+                    this.$notify({
+                        group: 'main',
+                        type: 'success',
+                        title: 'Sucesso!',
+                        text: 'Projeto criado com sucesso'
+                    });
+              }
+          })
       },
       cancel(){
           this.$router.push('/')
+      },
+      getProfessores(){
+            axios.get(`${API_URL}/professor`).then((response) => {
+                const {data} = response.data
+
+                let orientadores = []
+                let orientadoresId = []
+
+                data.forEach((professor) => {
+                    orientadores.push(professor.detalhes.nome)
+                    orientadoresId.push(professor.idx)
+                })
+
+                this.orientadores = orientadores
+                this.orientadoresId = orientadoresId
+
+                this.fields[2].items = orientadores
+            })
       }
   }
 }

@@ -55,7 +55,7 @@ export default {
             ]
         },
         { 
-            title: 'Grupos', child: [
+            title: 'Projetos', child: [
                 {title : 'Novo', route: '/NewGroup'},
                 {title : 'Visualizar', route: '/ViewGroups'}
             ]

@@ -63,13 +63,15 @@ export default {
             expanded: false,
             title: 'Ver Contatos',
             apiEndpoint: `${API_URL}/professor`,
+            dialog: false,
             headers: [
                 { text: 'Nome', value: 'nome' },
                 { text: 'Email', value: 'email' },
                 { text: 'Actions', value: 'actions', sortable: false }
             ],
             professores: [],
-            searchTerm: ''
+            searchTerm: '',
+            editedItem: {}
         }
     },
     created(){
@@ -113,7 +115,11 @@ export default {
                     text: err
                 }); 
             })
-        }
+        },
+        editItem(professor) {
+            const {idx} = professor
+            this.$router.push(`/newuser/${idx}`)
+        },
     }
 }
 </script>
