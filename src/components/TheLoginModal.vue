@@ -112,7 +112,7 @@ export default {
     },
     goToNewUser(event){
         event.preventDefault()
-        this.$router.push('/newuser')
+        this.$router.push('/newuser/-1')
         this.hideLoginModal()
     },
     forgotPassword(){

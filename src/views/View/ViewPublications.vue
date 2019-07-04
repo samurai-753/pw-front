@@ -21,8 +21,8 @@
                 </template>
                 <template v-slot:expand="props">
                     <v-card flat>
-                        <v-card-text> Informações: {{props.item.informacoes}}</v-card-text>
-                        <v-card-text>Arquivos : {{props.item.arquivos}}</v-card-text>
+                        <v-card-text> Informações: {{props.item.info}}</v-card-text>
+                        <v-card-text><a :href="props.item.documento">Download</a></v-card-text>
                     </v-card>
                 </template>
             </v-data-table>
@@ -52,7 +52,7 @@ export default {
         title: 'Ver Publicações',
         apiEndpoint: `${API_URL}/publicacao`,
         headers: [
-            { text: 'Info', value: 'info' },
+            { text: 'Nome', value: 'nome' },
             { text: 'Tipo', value: 'tipo' }
         ],
         publications: [],
@@ -61,6 +61,19 @@ export default {
   },
   created(){
       axios.get(this.apiEndpoint).then((response) => {
+          const {data} = response.data
+          data.forEach(publication => {
+              const {info, tipo, documento} = publication
+              const {idx, nome} = documento
+              let newPublication = {
+                  nome,
+                  info,
+                  tipo,
+                  documento : `${API_URL}/documento/` + idx
+              }
+
+              this.publications.push(newPublication)
+          });
           console.log(response)
       }).catch((err) => {
           alert(err)

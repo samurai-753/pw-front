@@ -14,7 +14,7 @@
                             </div>
                         </v-flex>
                         <v-flex>
-                            <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
+                            <vue-dropzone ref="myVueDropzone" id="dropzone" v-on:vdropzone-success="completed" :options="dropzoneOptions"></vue-dropzone>
                         </v-flex>
                     </v-layout>
                 </v-container>
@@ -36,6 +36,8 @@ import { VTextField, VSelect } from 'vuetify/lib'
 
 import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+import {API_URL} from '../../config/config'
+import { mapState } from 'vuex';
 
 export default {
   name: 'NewPublication',
@@ -50,6 +52,7 @@ export default {
   data () {
     return {
         title: 'Nova Publicação',
+        apiEndpoint: `${API_URL}/publicacao`,
         fields: [
                 {
                     label: 'Nome',
@@ -69,11 +72,13 @@ export default {
                     label: 'Tipo',
                     name: 'tipo',
                     fieldType: 'v-select',
-                    items: ["Conferência", "Resumo", "Periódico"],
+                    items: ["Conferencia", "Resumo", "Periodico"],
                     value: '',
                     required: true
                 }
         ],
+        dict: {"Conferencia" : "CONF", "Resumo" : "RES", "Periodico" : "PER"},
+        docid: null,
         actions: [
             {
                 "label" : "Cadastrar",
@@ -87,12 +92,17 @@ export default {
             },
         ],
         dropzoneOptions: {
-          url: 'https://httpbin.org/post',
+          url: `${API_URL}/documento`,
           thumbnailWidth: 150,
           maxFilesize: 0.5,
-          headers: { "My-Awesome-Header": "header value" }
+          headers: { "Authorization": this.token }
         }
     }
+  },
+  computed: {
+      ...mapState({
+         token : state => state.userToken 
+      })
   },
   methods: {
       HandleFunctionCall(functionName){
@@ -103,9 +113,39 @@ export default {
           this.fields.forEach((field) => {
               body[field.name] = field.value
           })
+          body['documento'] = this.docid
+          body['tipo'] = this.dict[body.tipo]
+          axios.post(this.apiEndpoint, body, {headers: {'authorization' : this.token}}).then((response) => {
+              if(response.status === 200) {
+                  this.$notify({
+                    group: 'main',
+                    type: 'success',
+                    title: 'Sucesso!',
+                    text: 'Publicação cadastrada com sucesso'
+                });
+              } else {
+                this.$notify({
+                    group: 'main',
+                    type: 'error',
+                    title: 'Ocorreu um erro',
+                    text: 'Erro'
+                });
+              }
+          }).catch((err) => {
+            this.$notify({
+                group: 'main',
+                type: 'error',
+                title: 'Ocorreu um erro',
+                text: err
+            });
+          })
+
       },
       cancel(){
           this.$router.push('/')
+      },
+      completed(file, response){
+        this.docid = response.data.idx
       }
   }
 }
