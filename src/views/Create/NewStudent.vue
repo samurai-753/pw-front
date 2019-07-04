@@ -46,7 +46,7 @@ export default {
   data () {
     return {
         title: 'Novo Projeto',
-        apiEndpoint: `${API_URL}/student`,
+        apiEndpoint: `${API_URL}/aluno`,
         fields: [
                 {
                     label: 'Nome do aluno',
@@ -58,13 +58,6 @@ export default {
                 {
                     label: 'Email institucional',
                     name: 'email',
-                    fieldType: 'v-text-field',
-                    value: '',
-                    required: true
-                },
-                {
-                    label: 'Curso',
-                    name: 'curso',
                     fieldType: 'v-text-field',
                     value: '',
                     required: true
@@ -100,7 +93,13 @@ export default {
           this.fields.forEach((field) => {
               body[field.name] = field.value
           })
-          console.log(body)
+          axios.post(this.apiEndpoint, body).then((response) => {
+              if (response.code === 200) {
+                  alert("foi")
+              } else {
+                  alert("n foi")
+              }
+          })
       },
       cancel(){
           this.$router.push('/')

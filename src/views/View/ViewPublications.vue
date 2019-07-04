@@ -34,7 +34,8 @@
 <script>
 import axios from 'axios'
 import { VTextField, VSelect } from 'vuetify/lib'
-import { scrypt } from 'crypto';
+
+import {API_URL} from '../../config/config'
 
 export default {
   name: 'ViewPublications',
@@ -49,18 +50,22 @@ export default {
     return {
         expanded: false,
         title: 'Ver Publicações',
+        apiEndpoint: `${API_URL}/publicacao`,
         headers: [
-            { text: 'Nome', value: 'nome' },
+            { text: 'Info', value: 'info' },
             { text: 'Tipo', value: 'tipo' }
         ],
-        publications: [
-            {'nome' : 'Code Smells', 'tipo' : 'Rafael Durelli', 'informacoes': 'blablablabalbalba' ,'arquivos' : 'Rafael.pdf'},
-            {'nome' : 'Otimização de maluqice', 'tipo' : 'Mayron Moreira', 'informacoes': 'blablablabalbalba' ,'arquivos' : 'Mayron.pdf'},
-            {'nome' : 'IoT', 'tipo' : 'Neumar Malheiros', 'informacoes': 'blablablabalbalba' ,'arquivos' : 'Neumar.pdf'},
-        ],
+        publications: [],
         searchTerm: ''
     }
   },
+  created(){
+      axios.get(this.apiEndpoint).then((response) => {
+          console.log(response)
+      }).catch((err) => {
+          alert(err)
+      })
+  }
 }
 </script>
 

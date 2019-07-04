@@ -26,7 +26,8 @@
 <script>
 import axios from 'axios'
 import { VTextField, VSelect } from 'vuetify/lib'
-import { scrypt } from 'crypto';
+
+import {API_URL} from '../../config/config'
 
 export default {
   name: 'ViewProjects',
@@ -40,6 +41,7 @@ export default {
   data () {
     return {
         title: 'Ver Projetos',
+        apiEndpoint: `${API_URL}/projeto_pesquisa`,
         headers: [
             { text: 'Nome', value: 'nome' },
             { text: 'Orientador', value: 'orientador' }
@@ -52,6 +54,13 @@ export default {
         searchTerm: ''
     }
   },
+  created(){
+      axios.get(this.apiEndpoint).then((results) => {
+          console.log(results)
+      }).then((err) => {
+          alert(err)
+      })
+  }
 }
 </script>
 

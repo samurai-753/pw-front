@@ -6,6 +6,7 @@
         <router-view/>
         <the-login-modal id="login-modal" v-if="showLoginModal"/>
         <the-drawer/>
+        <notifications group="main" />
       </div>
     </v-content>
   </v-app>

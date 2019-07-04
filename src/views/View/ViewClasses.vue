@@ -33,7 +33,9 @@
 <script>
 import axios from 'axios'
 import { VTextField, VSelect } from 'vuetify/lib'
-import { scrypt } from 'crypto';
+
+import {API_URL} from '../../config/config'
+
 
 export default {
   name: 'Viewclasses',
@@ -46,20 +48,29 @@ export default {
   },
   data () {
     return {
-        title: 'Ver Projetos',
+        title: 'Ver Disciplinas',
+        apiEndpoint: `${API_URL}/disciplina`,
         expanded: false,
         headers: [
             { text: 'Disciplina', value: 'disciplina' },
             { text: 'Professor responsável', value: 'professor' }
         ],
         classes: [
-            {'disciplina' : 'Programação Web', 'professor' : 'Rafael Durelli', 'arquivos': 'durelli.pdf'},
-            {'disciplina' : 'Programação Matemática', 'professor' : 'Mayron Moreira', 'arquivos': 'mayron.pdf'},
-            {'disciplina' : 'Sistemas distribuídos', 'professor' : 'Neumar Malheiros', 'arquivos': 'neumar.pdf'},
+            // {'disciplina' : 'Programação Web', 'professor' : 'Rafael Durelli', 'arquivos': 'durelli.pdf'},
+            // {'disciplina' : 'Programação Matemática', 'professor' : 'Mayron Moreira', 'arquivos': 'mayron.pdf'},
+            // {'disciplina' : 'Sistemas distribuídos', 'professor' : 'Neumar Malheiros', 'arquivos': 'neumar.pdf'},
         ],
         searchTerm: ''
     }
   },
+  created(){
+      axios.get(this.apiEndpoint).then((response) => {
+          console.log(response)
+          alert(response)
+      }).catch((err) => {
+          alert(err)
+      })
+  }
 }
 </script>
 
