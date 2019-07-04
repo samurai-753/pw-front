@@ -6,10 +6,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     showLoginModal: false,
-    showDrawer : false
+    showDrawer : false,
+    userToken : null
   },
   getters: {
-    showLoginModal: state => state.showLoginModal
+    showLoginModal: state => state.showLoginModal,
+    userToken: state => state.userToken,
   },
   mutations: {
     showLoginModal(state) {
@@ -20,6 +22,9 @@ export default new Vuex.Store({
     },
     toggleDrawer(state) {
       state.showDrawer = !state.showDrawer
+    },
+    defineToken(state, payload) {
+      state.userToken = payload.token
     }
   },
   actions: {
@@ -31,6 +36,9 @@ export default new Vuex.Store({
     },
     toggleDrawer(context){
       context.commit('toggleDrawer')
+    },
+    defineUserToken(context, payload) {
+      context.commit('defineToken', payload)
     }
   }
 })

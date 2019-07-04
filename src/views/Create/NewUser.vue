@@ -53,7 +53,7 @@ export default {
   data () {
     return {
         title: 'Novo Usuário',
-        apiEndpoint: `${API_URL}/student`,
+        apiEndpoint: `${API_URL}/professor`,
         fields: [
                 {
                     label: 'Nome',
@@ -77,30 +77,25 @@ export default {
                     required: true
                 },
                 {
-                    label: 'Curso',
-                    name: 'curso',
-                    fieldType: 'v-text-field',
-                    value: '',
-                    required: true
-                },
-                {
                     label: 'Sala',
-                    name: 'resumo',
+                    name: 'sala',
                     fieldType: 'v-text-field',
                     value: '',
                     required: true
                 },
                 {
                     label: 'Senha',
-                    name: 'resumo',
+                    name: 'senha',
                     fieldType: 'v-text-field',
+                    type: 'password',
                     value: '',
                     required: true,
                 },
                 {
                     label: 'Confirmar senha',
-                    name: 'resumo',
+                    name: 'confirmarSenha',
                     fieldType: 'v-text-field',
+                    type: 'password',
                     value: '',
                     required: true,
                 }
@@ -122,19 +117,54 @@ export default {
     }
   },
   methods: {
-      HandleFunctionCall(functionName){
-          this[functionName]()
-      },
-      sendRequisition(){
-          let body = {}
-          this.fields.forEach((field) => {
-              body[field.name] = field.value
-          })
-          console.log(body)
-      },
-      cancel(){
-          this.$router.push('/')
-      }
+    HandleFunctionCall(functionName){
+        this[functionName]()
+    },
+    sendRequisition(){
+        let body = {}
+        this.fields.forEach((field) => {
+            body[field.name] = field.value
+        })
+        if (body.senha === body.confirmarSenha) {
+            axios.post(this.apiEndpoint, body).then((response) => {
+            //Recuperar o token
+            const {status} = response
+            debugger
+            if (status === 200) {
+                this.$notify({
+                    group: 'main',
+                    type: 'success',
+                    title: 'Sucesso!',
+                    text: 'Usuário cadastrado com sucesso'
+                });
+            } else {
+                this.$notify({
+                    group: 'main',
+                    type: 'error',
+                    title: 'Ocorreu um erro!',
+                    text: 'Erro'
+                });
+            }
+            }).catch((err) => {
+                this.$notify({
+                    group: 'main',
+                    type: 'error',
+                    title: 'Ocorreu um erro!',
+                    text: err
+                });
+            })
+        } else {
+            this.$notify({
+                group: 'main',
+                type: 'error',
+                title: 'Ocorreu um erro!',
+                text: 'As senhas não correspondem'
+            });
+        }
+    },
+    cancel(){
+        this.$router.push('/')
+    }
   }
 }
 </script>

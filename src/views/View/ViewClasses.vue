@@ -65,8 +65,15 @@ export default {
   },
   created(){
       axios.get(this.apiEndpoint).then((response) => {
-          console.log(response)
-          alert(response)
+            this.classes = []
+          response.data.data.forEach(disciplina => {
+              const {nome, professor} = disciplina
+              let newDisciplina = {
+                  'disciplina': disciplina.nome,
+                  'professor' : disciplina.professor
+              }
+              this.classes.push(newDisciplina)
+          });
       }).catch((err) => {
           alert(err)
       })

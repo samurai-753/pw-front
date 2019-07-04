@@ -17,6 +17,10 @@
                     <tr @click="props.expanded = !props.expanded">
                         <td>{{ props.item.nome }}</td>
                         <td>{{ props.item.email }}</td>
+                        <td>
+                            <v-icon  style="margin-right: 5px" @click="editItem(props.item)"> edit </v-icon>
+                            <v-icon  @click="deleteItem(props.item)" > delete </v-icon>
+                        </td>
                     </tr>
                 </template>
                 <template v-slot:expand="props">
@@ -34,33 +38,83 @@
 <script>
 import axios from 'axios'
 import { VTextField, VSelect } from 'vuetify/lib'
-import { scrypt } from 'crypto';
+
+import {API_URL} from '../../config/config'
+
+import { mapState } from 'vuex'
+
 
 export default {
-  name: 'ViewPublications',
-  components: {
-    VTextField,
-    VSelect
-  },
-  props: {
-    name: String
-  },
-  data () {
-    return {
-        expanded: false,
-        title: 'Ver Contatos',
-        headers: [
-            { text: 'Nome', value: 'nome' },
-            { text: 'Email', value: 'email' },
-        ],
-        professores: [
-            { 'nome' : 'Rafael Durelli', 'email': 'Rafael@ufla.br' ,'sala' : 'DCC - 001', 'telefone' : '3599121 - 1234'},
-            { 'nome' : 'Mayron Moreira', 'email': 'Mayron@ufla.br' ,'sala' : 'DCC - 002', 'telefone' : '3599121 - 5678'},
-            { 'nome' : 'Neumar Malheiros', 'email': 'Neumar@ufla.br' ,'sala' : 'DCC - 003', 'telefone' : '3599121 - 9012'},
-        ],
-        searchTerm: ''
+    name: 'ViewPublications',
+    components: {
+        VTextField,
+        VSelect
+    },
+    props: {
+        name: String
+    },
+    computed: {
+        ...mapState({
+            userToken: state => state.userToken
+        })
+    },
+    data () {
+        return {
+            expanded: false,
+            title: 'Ver Contatos',
+            apiEndpoint: `${API_URL}/professor`,
+            headers: [
+                { text: 'Nome', value: 'nome' },
+                { text: 'Email', value: 'email' },
+                { text: 'Actions', value: 'actions', sortable: false }
+            ],
+            professores: [],
+            searchTerm: ''
+        }
+    },
+    created(){
+        axios.get(this.apiEndpoint).then((response) => {
+            const {data} = response.data
+            data.forEach(professor => {
+                const {detalhes, idx, sala} = professor
+                const {nome, email, telefone} = detalhes
+                let newProfessor = {
+                    idx, nome, email, telefone, sala
+                }
+                this.professores.push(newProfessor)
+            });
+        }).catch((err) => {
+            this.$notify({
+                group: 'main',
+                type: 'error',
+                title: 'Ocorreu um erro!',
+                text: err
+            });
+        })
+    },
+    methods : {
+        deleteItem(professor) {
+            const {idx} = professor
+            let endpoint = `${this.apiEndpoint}/${idx}`
+
+            let header = {'Authorization' : this.userToken}
+
+            axios.delete(endpoint, {'headers': header}).then((response) => {
+               this.$notify({
+                    group: 'main',
+                    type: 'success',
+                    title: 'Professor deletado com sucesso!',
+                }); 
+            }).catch((err) => {
+                this.$notify({
+                    group: 'main',
+                    type: 'error',
+                    title: 'Ocorreu um erro!',
+                    text: err
+                }); 
+            })
+        }
     }
-  },
 }
 </script>
 

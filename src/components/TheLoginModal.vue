@@ -87,14 +87,22 @@ export default {
         let apiEndpoint = `${API_URL}/login`
         const {email, password} = this
         let body = {email, password}
-        console.log("sending info")
-        console.log(apiEndpoint, body)
         axios.post(apiEndpoint, body).then((response) => {
-          console.log("Deu certo")
-          console.log(response)
+          const {access_token} = response.data
+          this.defineUserToken({'token' : access_token})
+          this.$notify({
+            group: 'main',
+            type: 'success',
+            title: 'Sucesso!',
+            text: 'Credenciais aprovadas'
+          });
         }).catch((err) => {
-          console.log("Deu errado")
-          console.log(err)
+          this.$notify({
+            group: 'main',
+            type: 'error',
+            title: 'Ocorreu um erro!',
+            text: 'As credenciais não existem no banco'
+          });
         })
     },
     goToNewUser(event){
@@ -105,7 +113,7 @@ export default {
     forgotPassword(){
       alert("Ainda não implementado")
     },
-    ...mapActions(['hideLoginModal'])
+    ...mapActions(['hideLoginModal', 'defineUserToken'])
   }
 }
 </script>
