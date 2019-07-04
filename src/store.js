@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { longStackSupport } from 'q';
 
 Vue.use(Vuex)
 
