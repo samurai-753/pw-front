@@ -20,7 +20,7 @@
             </template>
             <v-card class="blue darken-2 text-xs-center">
               <div v-for="(child, ic) in item.child" :key="ic">
-                <router-link :to="child.route"> <v-btn flat big class="white--text ">{{child.title}} </v-btn> </router-link>
+                <router-link :to="child.route" v-if="!child.private || userToken != null"> <v-btn flat big class="white--text ">{{child.title}} </v-btn> </router-link>
               </div>
             </v-card>
           </v-expansion-panel-content>
@@ -44,31 +44,31 @@ export default {
       items: [
         { 
             title: 'Projetos', child: [
-                {title : 'Novo', route: '/NewProject'},
+                {title : 'Novo', route: '/NewProject', private: true},
                 {title : 'Visualizar', route: '/ViewProjects'}
             ]
         },
         { 
             title: 'Alunos', child: [
-                {title : 'Novo', route: '/NewStudent'},
+                {title : 'Novo', route: '/NewStudent', private: true},
                 {title : 'Visualizar', route: '/ViewStudents'}
             ]
         },
         { 
             title: 'Grupos', child: [
-                {title : 'Novo', route: '/NewGroup'},
+                {title : 'Novo', route: '/NewGroup', private: true},
                 {title : 'Visualizar', route: '/ViewGroups'}
             ]
         },
         { 
             title: 'Disciplina', child: [
-                {title : 'Novo', route: '/NewClass'},
+                {title : 'Novo', route: '/NewClass', private: true},
                 {title : 'Visualizar', route: '/ViewClasses'}
             ]
         },
         { 
             title: 'Publicações', child: [
-                {title : 'Novo', route: '/NewPublication'},
+                {title : 'Novo', route: '/NewPublication', private: true},
                 {title : 'Visualizar', route: '/ViewPublications'}
             ]
         },
@@ -81,7 +81,8 @@ export default {
   },
   computed: {
     ...mapState({
-        openMenu : state => state.showDrawer
+        openMenu : state => state.showDrawer,
+        userToken: state => state.userToken,
     })
   },
   methods: {
