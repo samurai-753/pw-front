@@ -42,12 +42,12 @@ export default {
   data () {
     return {
       items: [
-        { 
-            title: 'Projetos', child: [
-                {title : 'Novo', route: '/NewProject'},
-                {title : 'Visualizar', route: '/ViewProjects'}
-            ]
-        },
+        // { 
+        //     title: 'Projetos', child: [
+        //         {title : 'Novo', route: '/NewProject'},
+        //         {title : 'Visualizar', route: '/ViewProjects'}
+        //     ]
+        // },
         { 
             title: 'Alunos', child: [
                 {title : 'Novo', route: '/NewStudent'},
