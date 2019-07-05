@@ -40,6 +40,8 @@ import { VTextField, VSelect } from 'vuetify/lib'
 
 import {API_URL} from '../../config/config'
 
+import {mapState} from 'vuex'
+
 
 export default {
   name: 'NewUser',
@@ -113,8 +115,37 @@ export default {
             },
         ],
         showConfirmPassword: false,
-        showPassword: false
+        showPassword: false,
+        idx: null,
+        editable: false
     }
+  },
+  computed: {
+    ...mapState({
+        token : state => state.userToken
+    })
+  },
+  mounted() {
+      const { idx } = this.$route.params
+      this.idx = idx
+      if (idx !== -1) {
+          this.editable = true
+          var self = this
+          axios.get(this.apiEndpoint + '/' + idx).then((response) => {
+              const {email, nome, telefone} = response.data.data.detalhes
+              const {sala} = response.data.data
+              let user = {
+                  email, nome, telefone, sala
+              }
+              self.fields = self.fields.filter(field => field.name !== "senha" && field.name !== "confirmarSenha")
+              for (var i = 0; i < self.fields.length; i++) {
+                  self.fields[i].value = user[self.fields[i].name]
+              }
+              self.actions[0].label = "Editar"
+              self.actions[0].onClick = "editar"
+              self.title = "Editar professor"
+          })
+      }
   },
   methods: {
     HandleFunctionCall(functionName){
@@ -129,7 +160,6 @@ export default {
             axios.post(this.apiEndpoint, body).then((response) => {
             //Recuperar o token
             const {status} = response
-            debugger
             if (status === 200) {
                 this.$notify({
                     group: 'main',
@@ -161,6 +191,24 @@ export default {
                 text: 'As senhas não correspondem'
             });
         }
+    },
+    editar(){
+        let body = {}
+        this.fields.forEach((field) => {
+            body[field.name] = field.value
+        })
+
+        let header = {'Authorization' : this.token}
+        console.log(this)
+
+        axios.patch(this.apiEndpoint + '/' + this.idx, body, {headers: header}).then(() => {
+            this.$notify({
+                group: 'main',
+                type: 'success',
+                title: 'Sucesso!',
+                text: 'Usuário editado com sucesso!'
+            });
+        })
     },
     cancel(){
         this.$router.push('/')
