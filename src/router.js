@@ -14,6 +14,7 @@ import ViewStudents from './views/View/ViewStudents.vue'
 import ViewClasses from './views/View/ViewClasses.vue'
 import ViewPublications from './views/View/ViewPublications.vue'
 import ViewContacts from './views/View/ViewContacts.vue'
+import ViewGroups from './views/View/ViewGroups.vue'
 
 
 Vue.use(Router)
@@ -89,6 +90,11 @@ export default new Router({
       path: '/ViewContacts',
       name: 'ViewContacts',
       component: ViewContacts
+    },
+    {
+      path: '/ViewGroups',
+      name: 'ViewGroups',
+      component: ViewGroups
     }
   ]
 })

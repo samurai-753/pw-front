@@ -16,6 +16,7 @@
                 <template v-slot:items="props">
                     <td>{{ props.item.nome }}</td>
                     <td>{{ props.item.orientador }}</td>
+                    <td>{{ props.item.coorientador }}</td>
                 </template>
             </v-data-table>
         </div>
@@ -30,7 +31,7 @@ import { VTextField, VSelect } from 'vuetify/lib'
 import {API_URL} from '../../config/config'
 
 export default {
-  name: 'ViewProjects',
+  name: 'ViewGroups',
   components: {
     VTextField,
     VSelect
@@ -44,21 +45,27 @@ export default {
         apiEndpoint: `${API_URL}/projeto`,
         headers: [
             { text: 'Nome', value: 'nome' },
-            { text: 'Orientador', value: 'orientador' }
+            { text: 'Orientador', value: 'orientador' },
+            { text: 'Coorientador', value: 'coorientador' }
         ],
-        projects: [
-            {'nome' : 'Code Smells', 'orientador' : 'Rafael Durelli'},
-            {'nome' : 'Otimização de maluqice', 'orientador' : 'Mayron Moreira'},
-            {'nome' : 'IoT', 'orientador' : 'Neumar Malheiros'},
-        ],
+        projects: [],
         searchTerm: ''
     }
   },
   created(){
+      console.log("created")
       axios.get(this.apiEndpoint).then((results) => {
-          console.log(results)
+          const {data} = results.data
+          data.forEach(projeto => {
+              let newProject = {
+                  'nome' : projeto.nome,
+                  'orientador': projeto.orientador.detalhes.nome,
+                  'coorientador': projeto.coorientador.detalhes.nome
+              }
+              this.projects.push(newProject)
+          });
       }).then((err) => {
-          alert(err)
+          console.log(err)
       })
   }
 }

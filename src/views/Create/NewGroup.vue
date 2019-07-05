@@ -10,7 +10,7 @@
                     <v-layout>
                         <v-flex>
                             <div v-for="field in fields" :key="field.label">
-                                <component :is="field.fieldType" v-model="field.value" :label="field.label" :required="field.required" :items="field.items"/>
+                                <component :is="field.fieldType" v-model="field.value" :label="field.label" :required="field.required" :disabled="!field.editable" :items="field.items"/>
                             </div>
                         </v-flex>
                     </v-layout>
@@ -31,6 +31,7 @@
 import axios from 'axios'
 import { VTextField, VSelect } from 'vuetify/lib'
 import {API_URL} from '../../config/config'
+import { mapState } from 'vuex'
 
 export default {
   name: 'NewGroup',
@@ -41,6 +42,12 @@ export default {
   props: {
     name: String
   },
+  computed:{
+    ...mapState({
+        userToken: state => state.userToken,
+        userName: state => state.userName
+    })
+  },
   data () {
     return {
         title: 'Novo Projeto',
@@ -48,33 +55,37 @@ export default {
         fields: [
                 {
                     label: 'Nome',
-                    name: 'name',
+                    name: 'nome',
                     fieldType: 'v-text-field',
                     value: '',
-                    required: true
+                    required: true,
+                    editable: true
                 },
                 {
                     label: 'Orientador',
                     name: 'orientador',
                     fieldType: 'v-text-field',
-                    value: '',
-                    required: true
+                    value: this.userName,
+                    required: true,
+                    editable: false
                 },
                 {
                     label: 'Coorientador',
                     name: 'coorientador',
                     fieldType: 'v-select',
                     items: [],
-                    trueValue: '',
                     value: '',
-                    required: false
+                    required: false,
+                    editable: true
                 },
                 {
-                    label: 'Alunos',
+                    label: 'Aluno',
                     name: 'alunos',
-                    fieldType: 'v-text-field',
+                    fieldType: 'v-select',
+                    items: [],
                     value: '',
-                    required: true
+                    required: true,
+                    editable: true
                 },
         ],
         actions: [
@@ -90,11 +101,15 @@ export default {
             },
         ],
         orientadores: [],
-        orientadoresId: []
+        orientadoresId: [],
+        alunos: [],
+        alunosId: []
     }
   },
   created(){
+      this.fields[1].value = this.userName;
       this.getProfessores()
+      this.getAlunos()
   },
   methods: {
       HandleFunctionCall(functionName){
@@ -108,14 +123,22 @@ export default {
           let indice = this.orientadores.indexOf(body['coorientador'])
           body['coorientador'] = this.orientadoresId[indice]
 
-          axios.post(this.apiEndpoint, body).then((response) => {
+          let indiceAluno = this.alunos.indexOf(body['alunos'])
+          body['alunos'] = [this.alunosId[indiceAluno]]
+          axios.post(this.apiEndpoint, body, {headers : {'authorization' : this.userToken}}).then((response) => {
               const {data} = response.data
-              if (data.status === 200) {
+              if (response.status === 200) {
                     this.$notify({
                         group: 'main',
                         type: 'success',
                         title: 'Sucesso!',
                         text: 'Projeto criado com sucesso'
+                    });
+              } else {
+                  this.$notify({
+                        group: 'main',
+                        type: 'error',
+                        title: 'Erro!',
                     });
               }
           })
@@ -139,6 +162,24 @@ export default {
                 this.orientadoresId = orientadoresId
 
                 this.fields[2].items = orientadores
+            })
+      },
+      getAlunos(){
+          axios.get(`${API_URL}/aluno`).then((response) => {
+                const {data} = response.data
+
+                let alunos = []
+                let alunosId = []
+
+                data.forEach((aluno) => {
+                    alunos.push(aluno.detalhes.nome)
+                    alunosId.push(aluno.idx)
+                })
+
+                this.alunos = alunos
+                this.alunosId = alunosId
+
+                this.fields[3].items = alunos
             })
       }
   }
